@@ -1,0 +1,30 @@
+{
+  "name": "alex-patterson-webdev/arp-content-negotiation",
+  "version" : "1.0.0",
+  "authors": [
+    {
+      "name": "Alex Patterson",
+      "email": "alex.patterson.webdev@gmail.com"
+    }
+  ],
+  "require" : {
+    "php"                              : "^5.6 || ^7.0",
+    "alex-patterson-webdev/arp-stdlib" : "~1.0"
+  },
+  "suggest": {
+    "zendframework/zend-json" : "To allow for the use of the Json content type adapters."
+  },
+  "require-dev" : {
+    "phpunit/phpunit" : "~5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Arp\\ContentNegotiation\\" : "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ArpTest\\ContentNegotiation\\" : "test/"
+    }
+  }
+}
