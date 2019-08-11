@@ -56,7 +56,7 @@ class Json extends AbstractContentTypeHandler
      *
      * @return boolean
      */
-    public function isValid($contentType)
+    public function isValid(string $contentType) : bool
     {
         return $this->hasContentType($contentType);
     }

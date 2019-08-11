@@ -19,11 +19,11 @@ interface ContentTypeHandlerInterface
      *
      * Check if the provided content type can be handled by this class.
      *
-     * @param string  $contentType
+     * @param string $contentType
      *
      * @return boolean
      */
-    public function isValid($contentType);
+    public function isValid(string $contentType) : bool ;
 
     /**
      * encode

@@ -11,13 +11,15 @@ namespace Arp\ContentNegotiation\Service;
 class Html extends AbstractContentTypeHandler
 {
     /**
-     * isValid
+     * isValidContentType
+     *
+     * Check if the provided content type can be handled by this class.
      *
      * @param string $contentType
      *
-     * @return mixed
+     * @return boolean
      */
-    public function isValid($contentType)
+    public function isValid(string $contentType) : bool
     {
         return $this->hasContentType($contentType);
     }
