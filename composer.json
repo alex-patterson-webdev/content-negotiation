@@ -15,6 +15,7 @@
     "zendframework/zend-json" : "To allow for the use of the Json content type adapters."
   },
   "require-dev" : {
+    "zendframework/zend-json" : "^3.1",
     "phpunit/phpunit" : "^8"
   },
   "autoload": {
