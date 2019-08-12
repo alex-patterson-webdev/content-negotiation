@@ -31,20 +31,16 @@ class Json extends AbstractContentTypeHandler
     protected $decodeType = ZendJson::TYPE_ARRAY;
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param array  $contentTypes  The types of contents that can be
-     * @param array  $options       The content handler options.
+     * @param ZendJson $json
+     * @param array    $options
      */
-    public function __construct(array $contentTypes = [], array $options = [])
+    public function __construct(ZendJson $json, array $options = [])
     {
-        $this->json = isset($options['json']) ? $options['json'] : false;
+        $this->json = $json;
 
-        if (! $this->json instanceof ZendJson) {
-            $this->json = new ZendJson;
-        }
-
-        parent::__construct($contentTypes, $options);
+        parent::__construct($options);
     }
 
     /**
@@ -129,22 +125,6 @@ class Json extends AbstractContentTypeHandler
                 $e
             );
         }
-    }
-
-    /**
-     * setContentTypes
-     *
-     * Set the content types that are valid for this handler.
-     *
-     * @param array $contentTypes  The content types that are valid.
-     *
-     * @return $this
-     */
-    public function setContentTypes(array $contentTypes)
-    {
-        $this->contentTypes = $contentTypes;
-
-        return $this;
     }
 
 }

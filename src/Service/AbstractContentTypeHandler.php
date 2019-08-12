@@ -28,13 +28,10 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
     /**
      * __construct
      *
-     * @param array $contentTypes
      * @param array $options
      */
-    public function __construct(array $contentTypes = [], array $options = [])
+    public function __construct(array $options = [])
     {
-        $this->contentTypes = $contentTypes;
-
         if (! empty($options)) {
             $this->setOptions($options);
         }
@@ -49,7 +46,7 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
      *
      * @return boolean
      */
-    public function hasContentType($contentType)
+    public function hasContentType(string $contentType) : bool
     {
         if (in_array($contentType, $this->contentTypes, true)) {
             return true;
@@ -71,7 +68,7 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
      *
      * @return array
      */
-    public function getContentTypes()
+    public function getContentTypes() : array
     {
         return $this->contentTypes;
     }
@@ -85,7 +82,7 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
      *
      * @return $this
      */
-    public function setContentTypes(array $contentTypes)
+    public function setContentTypes(array $contentTypes) : self
     {
         $this->contentTypes = [];
 
@@ -105,7 +102,7 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
      *
      * @return $this
      */
-    public function addContentType($contentType)
+    public function addContentType(string $contentType) : self
     {
         if (! $this->hasContentType($contentType)) {
             $this->contentTypes[] = $contentType;
