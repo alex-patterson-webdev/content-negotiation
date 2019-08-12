@@ -78,7 +78,7 @@ class Json extends AbstractContentTypeHandler
         $cycleCheck = $this->getOption('cycle_check', false);
         $options = [
             'enableJsonExprFinder' => false,
-            'prettyPrint'          => $this->getOption('pretty_print', false)
+            'prettyPrint'          => $this->getOption('pretty_print', false),
         ];
 
         try {
@@ -112,7 +112,7 @@ class Json extends AbstractContentTypeHandler
             $this->addOptions($options);
         }
 
-        $decodeType = $this->getOption('decode_type', ZendJson::TYPE_ARRAY);
+        $decodeType = $this->getOption('decode_type', $this->decodeType);
 
         try {
             return $this->json->decode($content, $decodeType);
