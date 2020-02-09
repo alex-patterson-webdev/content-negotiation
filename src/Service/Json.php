@@ -1,130 +1,105 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arp\ContentNegotiation\Service;
 
-use Arp\ContentNegotiation\Exception\ContentTypeHandlerException;
-use Zend\Json\Exception\ExceptionInterface;
-use Zend\Json\Json as ZendJson;
+use Arp\ContentNegotiation\Exception\ContentHandlerException;
 
 /**
- * Json
- *
- * Handle the encoding/decoding of Json content type's.
+ * Handle the encoding/decoding of JSON content.
  *
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\ContentNegotiation\Service
  */
-class Json extends AbstractContentTypeHandler
+class Json extends AbstractContentHandler
 {
     /**
-     * $json
-     *
-     * @var ZendJson
+     * @var array
      */
-    protected $json;
+    protected $contentTypes = [
+        'application/json',
+    ];
 
     /**
-     * $decodeType
-     *
-     * @var integer
+     * @var array
      */
-    protected $decodeType = ZendJson::TYPE_ARRAY;
+    private $encodeOptions;
 
     /**
-     * __construct.
-     *
-     * @param ZendJson $json
-     * @param array    $options
+     * @var array
      */
-    public function __construct(ZendJson $json, array $options = [])
+    private $decodeOptions;
+
+    /**
+     * @param array $contentTypes
+     * @param array $encodeOptions
+     * @param array $decodeOptions
+     */
+    public function __construct(array $contentTypes = [], array $encodeOptions = [], array $decodeOptions = [])
     {
-        $this->json = $json;
+        $this->encodeOptions = $encodeOptions;
+        $this->decodeOptions = $decodeOptions;
 
-        parent::__construct($options);
+        if (! empty($contentTypes)) {
+            $this->setContentTypes($contentTypes);
+        }
     }
 
     /**
-     * isValidContentType
-     *
-     * Check if the provided content type can be handled by this class.
-     *
-     * @param string $contentType
-     *
-     * @return boolean
-     */
-    public function isValid(string $contentType) : bool
-    {
-        return $this->hasContentType($contentType);
-    }
-
-    /**
-     * encode
-     *
      * Handle the encoding of request content.
      *
-     * @param mixed  $content  The request content that should be encoded.
-     * @param array  $options  The optional encoding options.
-     *
-     * @return mixed
-     *
-     * @throws ContentTypeHandlerException  If the content cannot be encoded.
-     */
-    public function encode($content, array $options = [])
-    {
-        if (! empty($options)) {
-            $this->addOptions($options);
-        }
-
-        $cycleCheck = $this->getOption('cycle_check', false);
-        $options = [
-            'enableJsonExprFinder' => false,
-            'prettyPrint'          => $this->getOption('pretty_print', false),
-        ];
-
-        try {
-            return $this->json->encode($content, $cycleCheck, $options);
-        }
-        catch (\Exception $e) {
-
-            throw new ContentTypeHandlerException(
-                $e->getMessage(),
-                $e->getCode(),
-                $e
-            );
-        }
-    }
-
-    /**
-     * decode
-     *
-     * Handle decoding of the response content.
-     *
-     * @param mixed  $content  The response content that should be decoded.
-     * @param array  $options  Optional configuration options when handling the response content.
+     * @param mixed $content The request content that should be encoded.
+     * @param array $options The encoding options.
      *
      * @return string
      *
-     * @throws ContentTypeHandlerException  If the content cannot be decoded.
+     * @throws ContentHandlerException  If the content cannot be encoded.
      */
-    public function decode($content, array $options = [])
+    public function encode($content, array $options = []) : string
     {
-        if (! empty($options)) {
-            $this->addOptions($options);
-        }
+        $options = array_replace_recursive($this->encodeOptions, $options);
 
-        $decodeType = $this->getOption('decode_type', $this->decodeType);
+        $encodeMaxDepth = $options['max_depth'] ?? 512;
+        $encodeOptions  = $options['options'] ?? 0;
 
         try {
-            return $this->json->decode($content, $decodeType);
-
-        } catch (ExceptionInterface $e) {
-
-            throw new ContentTypeHandlerException(
-                $e->getMessage(),
+            return json_encode($content, $encodeOptions, $encodeMaxDepth);
+        }
+        catch (\Throwable $e) {
+            throw new ContentHandlerException(
+                sprintf('The JSON content could not be decoded : %s', $e->getMessage()),
                 $e->getCode(),
                 $e
             );
         }
     }
 
+    /**
+     * Handle the response content.
+     *
+     * @param mixed $content The response content that should be decoded.
+     * @param array $options Optional configuration options when handling the response content.
+     *
+     * @return mixed
+     *
+     * @throws ContentHandlerException  If the content cannot be decoded.
+     */
+    public function decode($content, array $options = [])
+    {
+        $options = array_replace_recursive($this->decodeOptions, $options);
+
+        $decodeArray    = $options['as_array']  ?? true;
+        $decodeMaxDepth = $options['max_depth'] ?? 512;
+        $decodeOptions  = $options['options']   ?? 0;
+
+        try {
+            return json_decode($content, $decodeArray, $decodeMaxDepth, $decodeOptions);
+        }
+        catch (\Throwable $e) {
+            throw new ContentHandlerException(
+                sprintf('The JSON content could not be decoded : %s', $e->getMessage()),
+                $e->getCode(),
+                $e
+            );
+        }
+    }
 }

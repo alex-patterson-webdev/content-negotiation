@@ -3,7 +3,7 @@
 namespace ArpTest\ContentNegotiation\Service;
 
 use Zend\Json\Json as ZendJson;
-use Arp\ContentNegotiation\Service\ContentTypeHandlerInterface;
+use Arp\ContentNegotiation\Service\ContentHandlerInterface;
 use Arp\ContentNegotiation\Service\Json;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +36,7 @@ class JsonTest extends TestCase
     /**
      * testImplementsContentTypeHandlerInterface
      *
-     * Ensure the class implements ContentTypeHandlerInterface.
+     * Ensure the class implements ContentHandlerInterface.
      *
      * @test
      */
@@ -44,7 +44,7 @@ class JsonTest extends TestCase
     {
         $handler = new Json($this->json);
 
-        $this->assertInstanceOf(ContentTypeHandlerInterface::class, $handler);
+        $this->assertInstanceOf(ContentHandlerInterface::class, $handler);
     }
 
 }

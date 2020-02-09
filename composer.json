@@ -9,13 +9,9 @@
   ],
   "require" : {
     "php" : "^7.2",
-    "alex-patterson-webdev/stdlib" : "dev-master"
-  },
-  "suggest": {
-    "zendframework/zend-json" : "To allow for the use of the Json content type adapters."
+    "ext-json": "*"
   },
   "require-dev" : {
-    "zendframework/zend-json" : "^3.1",
     "phpunit/phpunit" : "^8"
   },
   "autoload": {
@@ -27,11 +23,5 @@
     "psr-4": {
       "ArpTest\\ContentNegotiation\\" : "test/"
     }
-  },
-  "repositories" : [
-    {
-      "type": "vcs",
-      "url": "/home/alexp/www/git/alex-patterson-webdev/stdlib.git"
-    }
-  ]
+  }
 }
