@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arp\ContentNegotiation\Service;
 
@@ -8,40 +8,26 @@ namespace Arp\ContentNegotiation\Service;
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\ContentNegotiation\Service
  */
-class Html extends AbstractContentTypeHandler
+class Html extends AbstractContentHandler
 {
     /**
-     * isValidContentType
+     * Handle the encoding of request content.
      *
-     * Check if the provided content type can be handled by this class.
+     * @param mixed $content The request content that should be encoded.
+     * @param array $options The encoding options.
      *
-     * @param string $contentType
-     *
-     * @return boolean
+     * @return string
      */
-    public function isValid(string $contentType) : bool
-    {
-        return $this->hasContentType($contentType);
-    }
-
-    /**
-     * encode
-     *
-     * @param mixed $content
-     * @param array $options
-     *
-     * @return mixed
-     */
-    public function encode($content, array $options = [])
+    public function encode($content, array $options = []) : string
     {
         return $content;
     }
 
     /**
-     * decode
+     * Handle the response content.
      *
-     * @param mixed $content
-     * @param array $options
+     * @param mixed $content The response content that should be decoded.
+     * @param array $options Optional configuration options when handling the response content.
      *
      * @return mixed
      */
@@ -49,5 +35,4 @@ class Html extends AbstractContentTypeHandler
     {
         return $content;
     }
-
 }

@@ -1,52 +1,28 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arp\ContentNegotiation\Service;
 
-use Arp\Stdlib\Service\OptionsAwareInterface;
-use Arp\Stdlib\Service\OptionsAwareTrait;
-
 /**
- * AbstractContentTypeHandler
+ * AbstractContentHandler
  *
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\ContentNegotiation\Service
  */
-abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface, OptionsAwareInterface
+abstract class AbstractContentHandler implements ContentHandlerInterface
 {
     /**
-     * @trait OptionsAwareTrait
-     */
-    use OptionsAwareTrait;
-
-    /**
-     * $contentTypes
-     *
-     * @var array
+     * @var string[]
      */
     protected $contentTypes = [];
 
     /**
-     * __construct
+     * Check if the provided content type can be handled by this class.
      *
-     * @param array $options
-     */
-    public function __construct(array $options = [])
-    {
-        if (! empty($options)) {
-            $this->setOptions($options);
-        }
-    }
-
-    /**
-     * hasContentType
-     *
-     * Check if the content type exists within the collection.
-     *
-     * @param string  $contentType
+     * @param string $contentType
      *
      * @return boolean
      */
-    public function hasContentType(string $contentType) : bool
+    public function isValid(string $contentType) : bool
     {
         if (in_array($contentType, $this->contentTypes, true)) {
             return true;
@@ -62,20 +38,6 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
     }
 
     /**
-     * getContentTypes
-     *
-     * Return the content types.
-     *
-     * @return array
-     */
-    public function getContentTypes() : array
-    {
-        return $this->contentTypes;
-    }
-
-    /**
-     * setContentTypes
-     *
      * Set the content types.
      *
      * @param array $contentTypes  The content types.
@@ -94,8 +56,6 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
     }
 
     /**
-     * addContentType
-     *
      * Add a new content type to the collection.
      *
      * @param string  $contentType
@@ -104,11 +64,10 @@ abstract class AbstractContentTypeHandler implements ContentTypeHandlerInterface
      */
     public function addContentType(string $contentType) : self
     {
-        if (! $this->hasContentType($contentType)) {
+        if (! $this->isValid($contentType)) {
             $this->contentTypes[] = $contentType;
         }
 
         return $this;
     }
-
 }

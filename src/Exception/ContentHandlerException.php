@@ -3,10 +3,10 @@
 namespace Arp\ContentNegotiation\Exception;
 
 /**
- * ContentTypeHandlerException
+ * ContentHandlerException
  *
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
  * @package Arp\ContentNegotiation\Exception
  */
-class ContentTypeHandlerException extends \Exception
+class ContentHandlerException extends \Exception
 {}

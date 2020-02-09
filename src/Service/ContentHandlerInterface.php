@@ -1,51 +1,39 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Arp\ContentNegotiation\Service;
 
-use Arp\ContentNegotiation\Exception\ContentTypeHandlerException;
+use Arp\ContentNegotiation\Exception\ContentHandlerException;
 
 /**
- * Xml
+ * Abstraction of the content type validation and encoding/decoding of the content.
  *
  * @author  Alex Patterson <alex.patterson.webdev@gmail.com>
- * @package Spectrum\ApiClient\Service
+ * @package Arp\ContentNegotiation\Service
  */
-class Xml extends AbstractContentTypeHandler
+interface ContentHandlerInterface
 {
     /**
-     * isValidContentType
-     *
      * Check if the provided content type can be handled by this class.
      *
      * @param string $contentType
      *
      * @return boolean
      */
-    public function isValid(string $contentType) : bool
-    {
-        return false;
-    }
+    public function isValid(string $contentType) : bool;
 
     /**
-     * encode
-     *
      * Handle the encoding of request content.
      *
      * @param mixed $content The request content that should be encoded.
      * @param array $options The encoding options.
      *
-     * @return mixed
+     * @return string
      *
-     * @throws ContentTypeHandlerException  If the content cannot be decoded.
+     * @throws ContentHandlerException  If the content cannot be decoded.
      */
-    public function encode($content, array $options = [])
-    {
-
-    }
+    public function encode($content, array $options = []) : string;
 
     /**
-     * decode
-     *
      * Handle the response content.
      *
      * @param mixed $content The response content that should be decoded.
@@ -53,11 +41,7 @@ class Xml extends AbstractContentTypeHandler
      *
      * @return mixed
      *
-     * @throws ContentTypeHandlerException  If the content cannot be decoded.
+     * @throws ContentHandlerException  If the content cannot be decoded.
      */
-    public function decode($content, array $options = [])
-    {
-
-    }
-
+    public function decode($content, array $options = []);
 }
