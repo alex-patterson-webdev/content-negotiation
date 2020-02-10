@@ -46,7 +46,7 @@ class DomDocument extends AbstractContentHandler
     {
         if (is_string($content)) {
             $document = new \DOMDocument();
-            $document->loadHTML($content, $options);
+            $document->loadHTML($content);
             $content = $document;
         }
         return $content;
