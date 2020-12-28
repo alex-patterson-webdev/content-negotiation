@@ -12,4 +12,4 @@ Provides the ability to encode and decode HTTP Request and Response bodies based
 
 Via composer :
 
-    require alex-patterson-webdev/content-negotiation ^1 
+    require alex-patterson-webdev/content-negotiation ^0.1 
