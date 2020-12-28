@@ -1,5 +1,7 @@
 {
   "name": "alex-patterson-webdev/content-negotiation",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Alex Patterson",
@@ -19,7 +21,14 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "ArpTest\\ContentNegotiation\\" : "test/"
+      "ArpTest\\ContentNegotiation\\" : "test/unit/"
     }
+  },
+  "scripts": {
+    "test": "php vendor/bin/phpunit"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true
   }
 }

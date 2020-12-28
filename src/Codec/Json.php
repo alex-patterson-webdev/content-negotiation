@@ -50,7 +50,7 @@ final class Json implements CodecInterface
             return json_encode(
                 $content,
                 $options['options'] ?? 0,
-                $options['max_depth'] ?? 512
+                $options['depth'] ?? 512
             );
         } catch (\Throwable $e) {
             throw new ContentEncodingException(
@@ -77,8 +77,8 @@ final class Json implements CodecInterface
             /** @noinspection JsonEncodingApiUsageInspection */
             return json_decode(
                 $content,
-                $options['as_array'] ?? true,
-                $options['max_depth'] ?? 512,
+                (isset($options['assoc']) && true === $options['assoc']),
+                $options['depth'] ?? 512,
                 $options['options'] ?? 0
             );
         } catch (\Throwable $e) {
